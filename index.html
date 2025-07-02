@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>StudyVisuals – Academic Design Services</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+  :root {
+    --primary: #00D4FF;
+    --highlight: #9D4EDD;
+    --accent: #32D74B;
+    --bg-dark: #0d1117;
+    --bg-glass: rgba(10,10,10,0.95);
+    --text-light: #ffffff;
+    --text-dark: #111111;
+    --bg-light: #f5f5f5;
+  }
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    padding-top: 64px; /* reserve space for fixed nav */
+  }
+  body.light-mode {
+    background: var(--bg-light);
+    color: var(--text-dark);
+  }
+  nav {
+    background: rgba(15,15,15,0.95);
+    border-bottom: 1px solid var(--accent);
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: saturate(180%) blur(12px);
+  }
+  nav button {
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+  }
+  nav button:hover, nav button.active {
+    background: var(--highlight);
+    color: #000;
+    box-shadow: 0 0 10px var(--highlight);
+  }
+  section.page {
+    display: none;
+    padding: 3rem 2rem;
+    max-width: 900px;
+    margin: 0 auto 4rem;
+    background: var(--bg-glass);
+    border-radius: 20px;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 25px rgba(157, 78, 221, 0.4);
+    animation: fadeIn 0.6s ease forwards;
+    min-height: 60vh;
+  }
+  section.page.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  h1, h2, h3 {
+    font-weight: 700;
+  }
+  h1 {
+    font-size: 2.75rem;
+    background: linear-gradient(90deg, var(--primary), var(--highlight));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    min-height: 3.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, var(--primary), var(--highlight));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  button.btn {
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    border: none;
+    background: var(--primary);
+    color: #000;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--primary);
+    transition: transform 0.3s ease;
+  }
+  button.btn:hover {
+    transform: scale(1.05);
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  input[type="text"], input[type="date"], select, input[type="file"], input[type="range"], textarea {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+    border: none;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  body.light-mode input,
+  body.light-mode select,
+  body.light-mode textarea {
+    background: #fff;
+    color: var(--text-dark);
+    border: 1px solid #ccc;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  .testimonial-carousel {
+    text-align: center;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--accent);
+    min-height: 3.5rem;
+    margin: 1rem auto 3rem;
+    max-width: 600px;
+    font-weight: 600;
+  }
+  .faq details {
+    background: #111;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+  .faq summary {
+    font-weight: 700;
+    outline: none;
+  }
+  .faq p {
+    margin-top: 0.5rem;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  body.light-mode .faq details {
+    background: #eee;
+    color: var(--text-dark);
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  }
+  .progress-bars p {
+    margin: 1rem 0 0.5rem;
+    font-weight: 600;
+  }
+  .progress-bars div {
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #222;
+  }
+  .progress-bars div > div {
+    height: 100%;
+    transition: width 1s ease;
+  }
+  .progress-bars div > div.primary {
+    background: var(--primary);
+  }
+  .progress-bars div > div.highlight {
+    background: var(--highlight);
+  }
+  .portfolio-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .portfolio-gallery img {
+    border-radius: 12px;
+    width: 300px;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--highlight);
+    transition: transform 0.3s ease;
+  }
+  .portfolio-gallery img:hover {
+    transform: scale(1.05);
+  }
+  .before-after {
+    text-align: center;
+    margin-top: 3rem;
+  }
+  .before-after h3 {
+    margin-bottom: 1rem;
+  }
+  .before-after > div {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .before-after img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+    user-select: none;
+    pointer-events: none;
+    position: relative;
+  }
+  #afterImg {
+    position: absolute;
+    top: 0; left: 0;
+    clip-path: inset(0 50% 0 0);
+    transition: clip-path 0.2s ease;
+    pointer-events: auto;
+  }
+  #slider {
+    width: 100%;
+    margin-top: 320px;
+  }
+  /* Chat widget */
+  #chatWidget {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: var(--bg-glass);
+    border: 1px solid var(--accent);
+    padding: 1rem;
+    border-radius: 15px;
+    max-width: 320px;
+    width: 320px;
+    color: white;
+    display: none;
+    z-index: 10000;
+    box-shadow: 0 0 30px var(--accent);
+    font-size: 0.9rem;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+  }
+  #chatWidget.light-mode {
+    background: #fff;
+    color: var(--text-dark);
+    border-color: var(--highlight);
+    box-shadow: 0 0 25px var(--highlight);
+  }
+  #chatWidget .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--highlight);
+  }
+  #chatWidget.light-mode .header {
+    color: var(--primary);
+  }
+  #chatWidget .messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+    padding: 0.5rem;
+    background: rgba(0,0,0,0.2);
+  }
+  #chatWidget.light-mode .messages {
+    background: #eee;
+  }
+  #chatWidget .message {
+    margin-bottom: 0.5rem;
+  }
+  #chatWidget .message.bot {
+    color: var(--accent);
+  }
+  #chatWidget .message.user {
+    font-weight: 600;
+    text-align: right;
+    color: var(--primary);
+  }
+  #chatWidget input {
+    width: calc(100% - 50px);
+    padding: 0.4rem 0.5rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.9rem;
+    margin-right: 4px;
+    background: var(--bg-dark);
+    color: var(--text-light);
+  }
+  #chatWidget.light-mode input {
+    background: #fff;
+    color: var(--text-dark);
+    border: 1px solid #ccc;
+  }
+  #chatWidget button.send-btn {
+    background: var(--highlight);
+    border: none;
+    border-radius: 8px;
+    padding: 0.4rem 0.7rem;
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+    width: 40px;
+  }
+  /* Floating Action Button */
+  .fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--highlight);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 0 12px var(--highlight);
+    z-index: 10001;
+    user-select: none;
+  }
+  body.light-mode nav button {
+    color: var(--highlight);
+  }
+  body.light-mode nav button:hover, body.light-mode nav button.active {
+    background: var(--primary);
+    color: #000;
+    box-shadow: 0 0 10px var(--primary);
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Primary navigation">
+  <button class="nav-btn active" data-target="home" aria-current="page">Home</button>
+  <button class="nav-btn" data-target="booking">Booking</button>
+  <button class="nav-btn" data-target="portfolio">Portfolio</button>
+  <button class="nav-btn" data-target="faq">FAQ</button>
+  <button onclick="toggleTheme()" aria-label="Toggle light and dark mode" style="margin-left: auto; background:none; border:none; color: var(--primary); font-weight: 700; cursor:pointer;">Toggle Mode</button>
+</nav>
+
+<!-- Home Page -->
+<section id="home" class="page active" role="main" tabindex="-1" aria-label="Home Page">
+  <h1 id="typewriter"></h1>
+  <p>Welcome to StudyVisuals – where academic excellence meets futuristic design. Start your journey now!</p>
+  <button class="btn" onclick="showPage('booking')">Start Booking</button>
+</section>
+
+<!-- Booking Page -->
+<section id="booking" class="page" role="region" aria-label="Booking Page" tabindex="-1">
+  <h2>Book a Design Service</h2>
+  <form id="bookingForm" novalidate>
+    <label for="service">Choose Service</label>
+    <select id="service" required aria-required="true" aria-describedby="service-desc">
+      <option value="" disabled selected>--Select--</option>
+      <option value="essay">Essay Design ($25)</option>
+      <option value="slides">Slide Deck ($40)</option>
+      <option value="guide">Study Guide ($30)</option>
+    </select>
+
+    <label for="upload">Upload Your File</label>
+    <input type="file" id="upload" required aria-required="true" aria-describedby="upload-desc" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt" />
+
+    <label for="deadline">Select Deadline</label>
+    <input type="date" id="deadline" required aria-required="true" />
+
+    <label>Total Price</label>
+    <p id="price" style="font-weight:bold; font-size:1.25rem; color: var(--highlight);">$0</p>
+
+    <button type="submit" class="btn" aria-label="Submit booking request">Submit Request</button>
+  </form>
+</section>
+
+<!-- Portfolio Page -->
+<section id="portfolio" class="page" role="region" aria-label="Portfolio Page" tabindex="-1">
+  <h2>Enhanced Portfolio Features</h2>
+  <div class="portfolio-gallery" role="list">
+    <img src="https://via.placeholder.com/300x200?text=Project+1" alt="Project 1" class="lightbox-trigger" role="listitem" tabindex="0" />
+    <img src="https://via.placeholder.com/300x200?text=Project+2" alt="Project 2" class="lightbox-trigger" role="listitem" tabindex="0" />
+  </div>
+
+  <div class="before-after">
+    <h3>Before / After Preview</h3>
+    <div>
+      <img src="https://via.placeholder.com/600x300/222222/FFFFFF?text=Before" alt="Before design" id="afterImg" />
+      <img src="https://via.placeholder.com/600x300/00D4FF/000000?text=After" alt="After design" />
+      <input type="range" min="0" max="100" value="50" id="slider" aria-label="Before and After slider" />
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Page -->
+<section id="faq" class="page" role="region" aria-label="Frequently Asked Questions" tabindex="-1" style="max-width: 900px;">
+  <h2>Frequently Asked Questions</h2>
+
+  <input type="text" id="faqSearch" placeholder="Search FAQs..." aria-label="Search frequently asked questions" style="width: 100%; padding: 0.8rem; border-radius: 12px; margin-bottom: 1rem; background: var(--bg-dark); color: white; border: 1px solid var(--accent);" />
+
+  <div class="faq" role="region" aria-live="polite">
+    <details>
+      <summary>What is StudyVisuals?</summary>
+      <p>StudyVisuals is an academic design service that transforms your school work into sleek, professional-grade designs.</p>
+    </details>
+    <details>
+      <summary>What services do you offer?</summary>
+      <p>We provide Essay Design, Slide Deck creation, and Study Guides.</p>
+    </details>
+    <details>
+      <summary>How fast is the turnaround time?</summary>
+      <p>Most projects are delivered within 48 hours, depending on complexity and availability.</p>
+    </details>
+    <details>
+      <summary>How do I book a service?</summary>
+      <p>Go to the Booking page, select your service, upload your file, and select a deadline. Submit the request and we'll get back to you.</p>
+    </details>
+    <details>
+      <summary>What file formats do you accept?</summary>
+      <p>We accept PDF, DOC, DOCX, PPT, PPTX, and TXT files.</p>
+    </details>
+    <details>
+      <summary>Can I request custom designs?</summary>
+      <p>Yes, please contact us for special custom design requests.</p>
+    </details>
+  </div>
+
+  <h2 style="margin-top: 3rem;">What Our Clients Say</h2>
+  <div class="testimonial-carousel" aria-live="polite" aria-atomic="true" role="region" style="min-height: 3.5rem; font-style: italic; font-weight: 600; color: var(--accent); max-width: 600px; margin: 1rem auto;">
+    “StudyVisuals made my presentation pop!” – Alex R.
+  </div>
+</section>
+
+<!-- Chat Widget -->
+<div id="chatWidget" role="complementary" aria-label="Chat with StudyVisuals assistant">
+  <div class="header">
+    StudyVisuals AI Assistant
+    <button aria-label="Close chat" id="chatCloseBtn" style="background:none; border:none; color: var(--highlight); font-weight: 700; font-size: 1.2rem; cursor: pointer;">×</button>
+  </div>
+  <div class="messages" tabindex="0" aria-live="polite" aria-relevant="additions"></div>
+  <form id="chatForm" autocomplete="off" aria-label="Send a message">
+    <input type="text" id="chatInput" aria-label="Type your message here" placeholder="Type your message..." />
+    <button type="submit" class="send-btn" aria-label="Send message">➤</button>
+  </form>
+</div>
+
+<button class="fab" aria-label="Open chat">💬</button>
+
+<script>
+  // Page navigation
+  const navButtons = document.querySelectorAll('nav .nav-btn');
+  const pages = document.querySelectorAll('section.page');
+
+  function showPage(pageId) {
+    pages.forEach(p => {
+      if (p.id === pageId) {
+        p.classList.add('active');
+        p.setAttribute('tabindex', '-1');
+        p.focus();
+      } else {
+        p.classList.remove('active');
+        p.removeAttribute('tabindex');
+      }
+    });
+    navButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.target === pageId);
+      btn.setAttribute('aria-current', btn.dataset.target === pageId ? 'page' : 'false');
+    });
+  }
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      showPage(btn.dataset.target);
+    });
+  });
+  showPage('home');
+
+  // Typewriter effect
+  const typewriterText = "Academic Design Meets Futuristic Tech";
+  const typewriterEl = document.getElementById('typewriter');
+  let i = 0;
+  function typeWriter() {
+    if(i < typewriterText.length) {
+      typewriterEl.textContent += typewriterText.charAt(i);
+      i++;
+      setTimeout(typeWriter, 80);
+    }
+  }
+  typeWriter();
+
+  // Booking form price calculation
+  const bookingForm = document.getElementById('bookingForm');
+  const serviceSelect = document.getElementById('service');
+  const priceEl = document.getElementById('price');
+  function updatePrice() {
+    const service = serviceSelect.value;
+    let price = 0;
+    if(service === 'essay') price = 25;
+    else if(service === 'slides') price = 40;
+    else if(service === 'guide') price = 30;
+    priceEl.textContent = '$' + price;
+  }
+  serviceSelect.addEventListener('change', updatePrice);
+
+  bookingForm.addEventListener('submit', e => {
+    e.preventDefault();
+    if(!serviceSelect.value) {
+      alert('Please select a service.');
+      serviceSelect.focus();
+      return;
+    }
+    if(!bookingForm.upload.files.length) {
+      alert('Please upload your file.');
+      bookingForm.upload.focus();
+      return;
+    }
+    if(!bookingForm.deadline.value) {
+      alert('Please select a deadline.');
+      bookingForm.deadline.focus();
+      return;
+    }
+    alert('Booking request submitted! We will contact you soon.');
+    bookingForm.reset();
+    priceEl.textContent = '$0';
+  });
+
+  // Portfolio before/after slider
+  const slider = document.getElementById('slider');
+  const afterImg = document.getElementById('afterImg');
+  slider.addEventListener('input', () => {
+    afterImg.style.clipPath = `inset(0 ${100 - slider.value}% 0 0)`;
+  });
+
+  // FAQ search filter
+  const faqSearch = document.getElementById('faqSearch');
+  const faqItems = document.querySelectorAll('.faq details');
+  faqSearch.addEventListener('input', () => {
+    const q = faqSearch.value.toLowerCase();
+    faqItems.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(q) ? '' : 'none';
+    });
+  });
+
+  // Testimonial carousel on FAQ page
+  const testimonials = [
+    '“StudyVisuals made my presentation pop!” – Alex R.',
+    '“The designs are so professional, my grades improved!” – Jamie L.',
+    '“Quick turnaround and excellent communication.” – Priya S.',
+    '“Highly recommend for academic projects!” – Miguel T.'
+  ];
+  let tIndex = 0;
+  const testimonialEl = document.querySelector('.testimonial-carousel');
+  function cycleTestimonials() {
+    testimonialEl.textContent = testimonials[tIndex];
+    tIndex = (tIndex + 1) % testimonials.length;
+  }
+  cycleTestimonials();
+  setInterval(cycleTestimonials, 15000);
+
+  // Portfolio lightbox
+  const lightboxTriggers = document.querySelectorAll('.lightbox-trigger');
+  lightboxTriggers.forEach(img => {
+    img.addEventListener('click', () => openLightbox(img.src, img.alt));
+    img.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(img.src, img.alt);
+      }
+    });
+  });
+  function openLightbox(src, alt) {
+    const lightbox = document.createElement('div');
+    lightbox.style = `
+      position: fixed;top:0;left:0;width:100vw;height:100vh;
+      background: rgba(0,0,0,0.8);
+      display:flex;justify-content:center;align-items:center;
+      z-index:100000;
+      cursor:pointer;
+    `;
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = alt;
+    img.style = 'max-width:90vw; max-height:90vh; border-radius:12px; box-shadow: 0 0 30px var(--highlight);';
+    lightbox.appendChild(img);
+    lightbox.addEventListener('click', () => document.body.removeChild(lightbox));
+    document.body.appendChild(lightbox);
+  }
+
+  // Chatbot logic
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
+  const messagesEl = document.querySelector('#chatWidget .messages');
+
+  const botResponses = {
+    "hello": "Hello! How can I assist you with StudyVisuals today?",
+    "hi": "Hi there! What can I do for you?",
+    "services": "We offer Essay Design, Slide Deck, and Study Guide services.",
+    "price": "Essay Design costs $25, Slide Deck $40, and Study Guide $30.",
+    "turnaround": "Most projects are delivered within 48 hours depending on complexity.",
+    "help": "Feel free to ask me anything about our services or how to book.",
+    "default": "Sorry, I didn't understand that. Can you please rephrase?"
+  };
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.textContent = text;
+    msgDiv.className = 'message ' + (sender === 'bot' ? 'bot' : 'user');
+    messagesEl.appendChild(msgDiv);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function botReply(input) {
+    let reply = botResponses.default;
+    const text = input.toLowerCase();
+    for (const key in botResponses) {
+      if (key !== "default" && text.includes(key)) {
+        reply = botResponses[key];
+        break;
+      }
+    }
+    return reply;
+  }
+
+  chatForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const userText = chatInput.value.trim();
+    if(!userText) return;
+    appendMessage(userText, 'user');
+    chatInput.value = '';
+    setTimeout(() => {
+      appendMessage(botReply(userText), 'bot');
+    }, 700);
+  });
+
+  // FAB toggle chat widget
+  const fab = document.querySelector('.fab');
+  const chatWidget = document.getElementById('chatWidget');
+  const chatCloseBtn = document.getElementById('chatCloseBtn');
+
+  fab.addEventListener('click', () => {
+    if(chatWidget.style.display === 'flex') {
+      chatWidget.style.display = 'none';
+      fab.setAttribute('aria-pressed', 'false');
+    } else {
+      chatWidget.style.display = 'flex';
+      fab.setAttribute('aria-pressed', 'true');
+      chatInput.focus();
+    }
+  });
+
+  chatCloseBtn.addEventListener('click', () => {
+    chatWidget.style.display = 'none';
+    fab.setAttribute('aria-pressed', 'false');
+  });
+</script>
+</body>
+</html>
